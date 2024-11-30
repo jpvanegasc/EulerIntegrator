@@ -1,4 +1,4 @@
-all: main.o
+all: main.o integrator.o
 
 COMPILER = gcc -std=c11
 MAIN = main.c
@@ -6,8 +6,11 @@ MAIN = main.c
 run: main.o
 	time ./main.o
 
-main.o: $(MAIN)
+main.o: $(MAIN) integrator.o
 	$(COMPILER) -O2 -Wall $^ -o $@
+
+integrator.o: integrator.c integrator.h
+	$(COMPILER) -O2 -Wall -c $<
 
 # Debugging and profiling
 DEBUG = -g -Wall -fsanitize=address -fsanitize=leak -fsanitize=undefined
